@@ -44,6 +44,18 @@
   let lastScrollDirection = null;
   let lastScrollY = window.scrollY || 0;
 
+  // ---- 2a. BEHAVIOR / SESSION STATE ----
+  // Session-level start time (used for "time on site" / session duration)
+  let sessionStartTime = getOrCreateSessionStartTime();
+
+  // Mouse movement path sampling (limited, flushed periodically)
+  let mousePath = [];
+  let mousePathFlushTimeout = null;
+  const MOUSE_PATH_MAX_POINTS = 200;
+
+  // Hover timing per element
+  const hoverStartTimes = new WeakMap();
+
   // ---- 3. SESSION ID (first-party only, localStorage + cookie fallback) ----
   function getOrCreateSessionId() {
     try {
@@ -67,6 +79,22 @@
       return count;
     } catch (e) {
       return null;
+    }
+  }
+
+  // ---- 3a. SESSION START TIME (first visit timestamp, shared across pages) ----
+  function getOrCreateSessionStartTime() {
+    try {
+      const existing = localStorage.getItem("lumina_session_start");
+      if (existing) {
+        return Number(existing);
+      }
+      const now = Date.now();
+      localStorage.setItem("lumina_session_start", String(now));
+      return now;
+    } catch (e) {
+      // If localStorage is blocked, fall back to "this page load"
+      return Date.now();
     }
   }
 
@@ -223,16 +251,60 @@
       function (e) {
         markFirstInteraction();
         const target = e.target;
+        if (!target) return;
+
+        const tag = target.tagName || null;
+        const id = target.id || null;
+        const classes = target.className ? String(target.className) : null;
+        const text =
+          target.innerText && target.innerText.length
+            ? target.innerText.slice(0, 80)
+            : null;
+
+        // Base click payload (unchanged from original script)
         sendEvent("click", {
           x: e.clientX,
           y: e.clientY,
           pageX: e.pageX,
           pageY: e.pageY,
-          tag: target ? target.tagName : null,
-          id: target && target.id ? target.id : null,
-          classes: target && target.className ? String(target.className) : null,
-          text: target && target.innerText ? target.innerText.slice(0, 80) : null,
+          tag: tag,
+          id: id,
+          classes: classes,
+          text: text,
         });
+
+        // Distinguish button clicks explicitly
+        const isButton =
+          tag === "BUTTON" ||
+          (typeof target.closest === "function" && target.closest("button")) ||
+          target.getAttribute("role") === "button";
+
+        if (isButton) {
+          sendEvent("button_click", {
+            x: e.clientX,
+            y: e.clientY,
+            pageX: e.pageX,
+            pageY: e.pageY,
+            tag: tag,
+            id: id,
+            classes: classes,
+            text: text,
+          });
+        }
+
+        // Ad slot clicks: elements inside a container marked with data-ad-slot="true"
+        const adSlot =
+          typeof target.closest === "function" ? target.closest("[data-ad-slot]") : null;
+        if (adSlot) {
+          sendEvent("ad_click", {
+            slotId: adSlot.getAttribute("data-slot-id") || null,
+            x: e.clientX,
+            y: e.clientY,
+            pageX: e.pageX,
+            pageY: e.pageY,
+            scrollY: window.scrollY || 0,
+          });
+        }
       },
       { passive: true }
     );
@@ -241,6 +313,84 @@
       "contextmenu",
       function (e) {
         sendEvent("right_click", { x: e.clientX, y: e.clientY });
+      },
+      { passive: true }
+    );
+  }
+
+  // Mouse movement path sampling.
+  // Sends occasional "mouse_path" events with a limited set of points.
+  function setupMouseTracking() {
+    window.addEventListener(
+      "mousemove",
+      function (e) {
+        markFirstInteraction();
+
+        if (mousePath.length < MOUSE_PATH_MAX_POINTS) {
+          mousePath.push({
+            x: e.clientX,
+            y: e.clientY,
+            t: Date.now(),
+          });
+        }
+
+        // Flush at most every 2s while there is movement
+        if (!mousePathFlushTimeout) {
+          mousePathFlushTimeout = setTimeout(function () {
+            if (mousePath.length) {
+              sendEvent("mouse_path", {
+                points: mousePath.slice(),
+                sampleCount: mousePath.length,
+              });
+              mousePath = [];
+            }
+            mousePathFlushTimeout = null;
+          }, 2000);
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  // Hover duration per element.
+  // Logs "hover" events when the mouse leaves an element after a meaningful dwell.
+  function setupHoverTracking() {
+    document.addEventListener(
+      "mouseover",
+      function (e) {
+        const target = e.target;
+        if (!target) return;
+        hoverStartTimes.set(target, Date.now());
+      },
+      { passive: true }
+    );
+
+    document.addEventListener(
+      "mouseout",
+      function (e) {
+        const target = e.target;
+        if (!target) return;
+        const start = hoverStartTimes.get(target);
+        if (!start) return;
+
+        hoverStartTimes.delete(target);
+        const durationMs = Date.now() - start;
+
+        // Ignore ultra-short hovers (noise)
+        if (durationMs < 50) return;
+
+        const text =
+          target.innerText && target.innerText.length
+            ? target.innerText.slice(0, 80)
+            : null;
+
+        sendEvent("hover", {
+          durationMs: durationMs,
+          tag: target.tagName || null,
+          id: target.id || null,
+          classes: target.className ? String(target.className) : null,
+          text: text,
+        });
       },
       { passive: true }
     );
@@ -328,8 +478,24 @@
     });
   }
 
+  // Session-level stats derived from sessionStartTime + visitCount.
+  // This does NOT guarantee a true "session end", but gives a per-page
+  // snapshot that can be aggregated server-side into time-on-site /
+  // session duration metrics.
+  function sendSessionStats(reason) {
+    const now = Date.now();
+    const sessionAgeMs = now - sessionStartTime;
+
+    sendEvent("session_stats", {
+      reason: reason, // e.g. "page_exit"
+      sessionAgeMs: sessionAgeMs, // approximate "time on site" since first visit
+      visitCount: getVisitCount(),
+    });
+  }
+
   function setupPageExitTracking() {
     window.addEventListener("beforeunload", function () {
+      sendSessionStats("page_exit");
       sendEvent("page_exit", {
         msOnPage: Date.now() - pageLoadTime,
         maxScrollDepthPercent: maxScrollDepth,
@@ -359,6 +525,8 @@
     setupCopyPasteTracking();
     setupErrorTracking();
     setupPageExitTracking();
+    setupMouseTracking();
+    setupHoverTracking();
   });
 })();
 // </script>
