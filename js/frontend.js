@@ -318,6 +318,7 @@
     );
   }
 
+/*
   // Mouse movement path sampling.
   // Sends occasional "mouse_path" events with a limited set of points.
   function setupMouseTracking() {
@@ -351,6 +352,7 @@
       { passive: true }
     );
   }
+*/
 
   // Hover duration per element.
   // Logs "hover" events when the mouse leaves an element after a meaningful dwell.
