@@ -9,6 +9,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/style.css" />
+
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -99,10 +116,22 @@
             <p>In the lower Hooghly estuary of West Bengal, not far from Kolkata, a small island called Ghoramara has become one of India’s starkest examples of slow, relentless climate damage. Once covering more than 7 square kilometres, Ghoramara has shrunk dramatically over the last few decades as rising seas, powerful cyclones, and shifting river channels steadily gnaw away at its soft, muddy shores. Villages shown on older maps now lie underwater, and entire hamlets have been abandoned as the coastline retreats metre by metre.</p>
             <p>Studies using satellite data and historical maps show just how extreme the change has been. In the 1970s, Ghoramara’s land area was estimated at roughly 7.2 square kilometres; by 2022, that had fallen to about 3.6 square kilometres, meaning roughly half the island has vanished within around fifty years. Some analyses suggest the erosion is so rapid that the island could shrink toward roughly 2.6 square kilometres by the early 2030s if current trends continue. Local residents describe losing their homes multiple times, rebuilding further inland only to watch the river or sea advance again.</p>
             <p>For the people who live there, the crisis is not abstract. Families have watched embankments collapse, fields turn salty and infertile, and freshwater ponds become contaminated as storm surges push seawater farther inland. Many of those who once farmed the island’s fertile soil have moved to nearby Sagar Island or to the mainland as climate migrants, often ending up in precarious settlements with few formal rights or protections. Those who remain face regular flooding, stronger cyclones in the Bay of Bengal, and a growing sense of uncertainty about how long their homes will survive.</p>
-            <p>Scientists studying the region point out that Ghoramara is part of a broader pattern across the Sundarbans, the sprawling delta shared by India and Bangladesh. Several smaller islands there — including Lohachara and Suparibhanga — have already disappeared beneath the waves entirely in recent decades, while others like Sagar Island have lost significant chunks of land. The combined impact of sea‑level rise, subsidence, changes in river sediment supply, and human‑built embankments has left some islands starved of new silt, making erosion worse.</p>
+            <p>Scientists studying the region point out that Ghoramara is part of a broader pattern across the Sundarbans, the sprawling delta shared by India and Bangladesh. Several smaller islands there — including Lohachara and Suparibhanga — have already disappeared beneath the waves entirely in recent decades, while others like Sagar Island have lost significant chunks of land. The combined impact of sea-level rise, subsidence, changes in river sediment supply, and human-built embankments has left some islands starved of new silt, making erosion worse.</p>
             <p>Indian researchers and policy advocates argue that places like Ghoramara should be early test cases for how the country handles “climate displacement” — the gradual uprooting of communities not by a single disaster but by an accumulation of smaller losses. Unlike victims of a sudden flood or cyclone, residents here are often not recognised as disaster refugees and struggle to access compensation, land rights, or planned resettlement. The island’s shrinking outline on the map has become a symbol of a legal and moral gap: people can see climate change redrawing the coastline, but the systems meant to protect them are not keeping pace.</p>
             <p>Ghoramara may never vanish completely, but the version of the island that older residents remember is already gone. As the river channels widen and embankments crumble, the story of this tiny, eroding landmass has become a warning for coastal regions far beyond the Sundarbans. It shows how climate change can transform geography and livelihoods slowly enough to be ignored for years, yet fast enough that, within a single lifetime, a community can watch its world slip into the sea.</p>
-          </div></article>
+          </div>
+
+          <div class="article-pagination" aria-label="Article navigation">
+            <a class="article-nav-btn article-nav-btn--prev" href="article-1.html" aria-label="Previous Article">
+              <span aria-hidden="true">←</span>
+              <span>Previous Article</span>
+            </a>
+            <a class="article-nav-btn article-nav-btn--next" href="article-3.html" aria-label="Next Article">
+              <span>Next Article</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </main>

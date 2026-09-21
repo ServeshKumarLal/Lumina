@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Articles — LUMINA</title>
@@ -9,6 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -94,7 +111,7 @@
             <span class="article-card-read-time">9 min read</span>
           </div>
           <h2 class="article-card-title">The Wild Deep-Space Radio Signal Astronomers Still Can't Fully Explain</h2>
-          <p class="article-card-excerpt">On the night of 15 August 1977, a radio telescope at Ohio State University briefly picked up one of the strangest signals in the history of astronomy: a sharp, 72‑second spike at precisely the hydrogen line frequency, now famous as the “Wow! signal.” The Big Ear radio telescope had been scanning the sky for signs of extraterrestrial intelligence, but this one transmission stood out so dramatically that astronomer Jerry Ehman circled the numbers on the printout and scribbled “Wow!” in the margin. It was far stronger than the background noise, appeared only in one of the telescope’s channels, and rose and fell in a way that suggested it was coming from a fixed point in space, not from passing aircraft or local interference.</p>
+          <p class="article-card-excerpt">On the night of 15 August 1977, a radio telescope at Ohio State University briefly picked up one of the strangest signals in the history of astronomy: a sharp, 72-second spike at precisely the hydrogen line frequency, now famous as the “Wow! signal.” The Big Ear radio telescope had been scanning the sky for signs of extraterrestrial intelligence, but this one transmission stood out so dramatically that astronomer Jerry Ehman circled the numbers on the printout and scribbled “Wow!” in the margin. It was far stronger than the background noise, appeared only in one of the telescope’s channels, and rose and fell in a way that suggested it was coming from a fixed point in space, not from passing aircraft or local interference.</p>
           <div class="article-card-footer">
             <div class="article-card-author">
               <div class="article-card-author-avatar">JR</div>
@@ -148,7 +165,7 @@
               <span class="article-card-date">Apr 15, 2025</span>
             </div>
             <h3 class="article-card-title">The 'Goldilocks' Planet 40 Light-Years Away That Might Be Our Best Shot at Another Earth</h3>
-            <p class="article-card-excerpt">In 2017, astronomers announced the discovery of seven Earth‑sized planets orbiting a small, cool star named TRAPPIST‑1, roughly 40 light‑years from Earth in the constellation Aquarius. Three of those worlds lie in the star’s so‑called habitable zone, where temperatures could, in theory, allow liquid water to exist on the surface if the planets have suitable atmospheres. Among them, one world — TRAPPIST‑1e — quickly emerged as the most promising candidate for an Earth‑like environment.</p>
+            <p class="article-card-excerpt">In 2017, astronomers announced the discovery of seven Earth-sized planets orbiting a small, cool star named TRAPPIST-1, roughly 40 light-years from Earth in the constellation Aquarius. Three of those worlds lie in the star’s so-called habitable zone, where temperatures could, in theory, allow liquid water to exist on the surface if the planets have suitable atmospheres. Among them, one world — TRAPPIST-1e — quickly emerged as the most promising candidate for an Earth-like environment.</p>
             <div class="article-card-footer">
               <div class="article-card-author">
                 <div class="article-card-author-avatar">MP</div>
@@ -173,7 +190,7 @@
               <span class="article-card-date">Apr 8, 2025</span>
             </div>
             <h3 class="article-card-title">The Tiny "Water Bears" That Survived the Vacuum of Space</h3>
-            <p class="article-card-excerpt">Tardigrades — often nicknamed “water bears” for their stubby legs and lumbering gait — are some of the toughest animals known to science. Measuring less than a millimetre long, these microscopic creatures can withstand crushing pressures, extreme temperatures, and intense radiation that would kill most other life forms. Their legend grew in 2007, when thousands of tardigrades were launched into low Earth orbit on the European Space Agency’s FOTON‑M3 mission and exposed directly to the vacuum of space.</p>
+            <p class="article-card-excerpt">Tardigrades — often nicknamed “water bears” for their stubby legs and lumbering gait — are some of the toughest animals known to science. Measuring less than a millimetre long, these microscopic creatures can withstand crushing pressures, extreme temperatures, and intense radiation that would kill most other life forms. Their legend grew in 2007, when thousands of tardigrades were launched into low Earth orbit on the European Space Agency’s FOTON-M3 mission and exposed directly to the vacuum of space.</p>
             <div class="article-card-footer">
               <div class="article-card-author">
                 <div class="article-card-author-avatar">AC</div>
@@ -226,7 +243,7 @@
               <span class="article-card-date">Mar 25, 2025</span>
             </div>
             <h3 class="article-card-title">Inside the Real Luxury Bunkers Billionaires Are Building for the Worst-Case Scenario</h3>
-            <p class="article-card-excerpt">Over the past decade, reports have surfaced of ultra‑wealthy tech founders and investors quietly buying remote properties and commissioning high‑end survival bunkers, turning doomsday preparation into a status symbol. Silicon Valley insiders have described this trend as “apocalypse insurance,” suggesting that a significant share of the rich now keep some form of plan — from private islands to underground shelters — in case of catastrophic social or environmental breakdown. New Zealand, with its isolation and political stability, has become one of the favoured destinations for such projects.</p>
+            <p class="article-card-excerpt">Over the past decade, reports have surfaced of ultra-wealthy tech founders and investors quietly buying remote properties and commissioning high-end survival bunkers, turning doomsday preparation into a status symbol. Silicon Valley insiders have described this trend as “apocalypse insurance,” suggesting that a significant share of the rich now keep some form of plan — from private islands to underground shelters — in case of catastrophic social or environmental breakdown. New Zealand, with its isolation and political stability, has become one of the favoured destinations for such projects.</p>
             <div class="article-card-footer">
               <div class="article-card-author">
                 <div class="article-card-author-avatar">JR</div>

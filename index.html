@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>LUMINA</title>
@@ -9,6 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -159,7 +176,7 @@
                     <span class="article-card-date">Apr 22</span>
                   </div>
                   <h3 class="article-card-title">The Indian Island That's Being Eaten by the Sea in Front of Everyone's Eyes</h3>
-                  <p class="article-card-excerpt">Ghoramara Island has lost roughly half its land in recent decades as sea‑level rise and shifting river channels steadily erode its shores, forcing repeated displacement.</p>
+                  <p class="article-card-excerpt">Ghoramara Island has lost roughly half its land in recent decades as sea-level rise and shifting river channels steadily erode its shores, forcing repeated displacement.</p>
                   <div class="article-card-footer">
                     <div class="article-card-author">
                       <div class="article-card-author-avatar">SL</div>
@@ -186,7 +203,7 @@
                     <span class="article-card-date">Apr 15</span>
                   </div>
                   <h3 class="article-card-title">The 'Goldilocks' Planet 40 Light-Years Away That Might Be Our Best Shot at Another Earth</h3>
-                  <p class="article-card-excerpt">TRAPPIST‑1e sits in its star's habitable zone and may offer the best near‑term opportunity to study an Earth‑sized world for signs of atmosphere and water.</p>
+                  <p class="article-card-excerpt">TRAPPIST-1e sits in its star's habitable zone and may offer the best near-term opportunity to study an Earth-sized world for signs of atmosphere and water.</p>
                   <div class="article-card-footer">
                     <div class="article-card-author">
                       <div class="article-card-author-avatar">MP</div>

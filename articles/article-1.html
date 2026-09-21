@@ -9,6 +9,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/style.css" />
+
+    <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -103,13 +120,24 @@
           <p class="article-hero-caption">Illustration: Radial attention — every node weighs every other node simultaneously.</p>
 
           <div class="prose">
-            <p>On the night of 15 August 1977, a radio telescope at Ohio State University briefly picked up one of the strangest signals in the history of astronomy: a sharp, 72‑second spike at precisely the hydrogen line frequency, now famous as the “Wow! signal.” The Big Ear radio telescope had been scanning the sky for signs of extraterrestrial intelligence, but this one transmission stood out so dramatically that astronomer Jerry Ehman circled the numbers on the printout and scribbled “Wow!” in the margin. It was far stronger than the background noise, appeared only in one of the telescope’s channels, and rose and fell in a way that suggested it was coming from a fixed point in space, not from passing aircraft or local interference.</p>
+            <p>On the night of 15 August 1977, a radio telescope at Ohio State University briefly picked up one of the strangest signals in the history of astronomy: a sharp, 72-second spike at precisely the hydrogen line frequency, now famous as the “Wow! signal.” The Big Ear radio telescope had been scanning the sky for signs of extraterrestrial intelligence, but this one transmission stood out so dramatically that astronomer Jerry Ehman circled the numbers on the printout and scribbled “Wow!” in the margin. It was far stronger than the background noise, appeared only in one of the telescope’s channels, and rose and fell in a way that suggested it was coming from a fixed point in space, not from passing aircraft or local interference.</p>
             <p>The most unsettling part is that no one has ever seen anything exactly like it again. Teams have repeatedly pointed more sensitive radio telescopes back at the same patch of sky in the constellation Sagittarius, listening for a repeat, but the sky has stayed silent. That lack of repetition makes it difficult to treat the Wow! signal as a deliberate “beacon” from another civilization, because most serious search strategies assume that any alien transmitter would send something on a repeating schedule so it could be distinguished from random noise. Yet the combination of its narrow frequency, intensity, and shape has kept it on the short list of genuinely puzzling space signals.</p>
-            <p>Over the decades, scientists have proposed a range of natural explanations, from passing comets to odd radio reflections, but most of those early ideas have been ruled out. More recent work points toward a rare kind of outburst: a flare from a highly magnetized neutron star, known as a magnetar, slamming into a cloud of cold hydrogen gas and briefly lighting it up at exactly the wavelength Big Ear was watching. In this scenario, the telescope just happened to be looking in the right direction at exactly the right moment during a short‑lived astrophysical event that has not repeated in the same way since.</p>
-            <p>Even that answer is not completely satisfying. The proposed magnetar–hydrogen interaction fits some aspects of the signal, such as its narrow frequency and intensity, but cannot yet be confirmed because astronomers did not have imaging or multi‑wavelength data at the time. The Big Ear telescope was dismantled in the 1990s, meaning the exact observing setup can never be recreated, and there is no guarantee that a similar flare in the same region will occur again within our observing window. As a result, the Wow! signal now sits in a strange category: probably natural, but still officially unexplained.</p>
-            <p>What makes this story so gripping is that it represents the boundary of what current instruments and theories can untangle. To this day, the Wow! signal is one of the most compelling examples of a one‑off cosmic event that briefly looked exactly like the sort of narrowband transmission SETI astronomers hope to find, then vanished without leaving enough clues behind. Whether it was a freak outburst of a distant star or the cosmic equivalent of a wrong number that we will never trace, it reminds researchers that the universe still throws up signals that sit uncomfortably between “weird natural physics” and “something else.”</p>
-          </div></article>
+            <p>Over the decades, scientists have proposed a range of natural explanations, from passing comets to odd radio reflections, but most of those early ideas have been ruled out. More recent work points toward a rare kind of outburst: a flare from a highly magnetized neutron star, known as a magnetar, slamming into a cloud of cold hydrogen gas and briefly lighting it up at exactly the wavelength Big Ear was watching. In this scenario, the telescope just happened to be looking in the right direction at exactly the right moment during a short-lived astrophysical event that has not repeated in the same way since.</p>
+            <p>Even that answer is not completely satisfying. The proposed magnetar–hydrogen interaction fits some aspects of the signal, such as its narrow frequency and intensity, but cannot yet be confirmed because astronomers did not have imaging or multi-wavelength data at the time. The Big Ear telescope was dismantled in the 1990s, meaning the exact observing setup can never be recreated, and there is no guarantee that a similar flare in the same region will occur again within our observing window. As a result, the Wow! signal now sits in a strange category: probably natural, but still officially unexplained.</p>
+            <p>What makes this story so gripping is that it represents the boundary of what current instruments and theories can untangle. To this day, the Wow! signal is one of the most compelling examples of a one-off cosmic event that briefly looked exactly like the sort of narrowband transmission SETI astronomers hope to find, then vanished without leaving enough clues behind. Whether it was a freak outburst of a distant star or the cosmic equivalent of a wrong number that we will never trace, it reminds researchers that the universe still throws up signals that sit uncomfortably between “weird natural physics” and “something else.”</p>
+          </div>
 
+          <div class="article-pagination" aria-label="Article navigation">
+            <a class="article-nav-btn article-nav-btn--prev" href="article-12.html" aria-label="Previous Article">
+              <span aria-hidden="true">←</span>
+              <span>Previous Article</span>
+            </a>
+            <a class="article-nav-btn article-nav-btn--next" href="article-2.html" aria-label="Next Article">
+              <span>Next Article</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </main>
@@ -157,7 +185,6 @@
       </div>
     </div>
   </footer>
-
   <script src="../js/main.js"></script>
   <script src="js/frontend.js"></script>
 </body>

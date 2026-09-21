@@ -9,6 +9,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/style.css" />
+
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -98,13 +115,25 @@
           <p class="article-hero-caption">EEG waveform patterns during REM and non-REM sleep cycles.</p>
 
           <div class="prose">
-            <p>In 2017, astronomers announced the discovery of seven Earth‑sized planets orbiting a small, cool star named TRAPPIST‑1, roughly 40 light‑years from Earth in the constellation Aquarius. Three of those worlds lie in the star’s so‑called habitable zone, where temperatures could, in theory, allow liquid water to exist on the surface if the planets have suitable atmospheres. Among them, one world — TRAPPIST‑1e — quickly emerged as the most promising candidate for an Earth‑like environment.</p>
-            <p>Climate models suggest that TRAPPIST‑1e receives a level of starlight comparable to what Earth gets from the Sun, making it neither obviously scorched nor frozen so long as it can hold onto a reasonably thick atmosphere. Its size and density indicate a rocky composition, and its position between hotter inner siblings and colder outer companions has led some researchers to call it the system’s “just right” planet. That combination has put TRAPPIST‑1e at the top of the list for detailed follow‑up by the James Webb Space Telescope (JWST) and other observatories.</p>
-            <p>Over the last few years, scientists have begun using JWST to watch TRAPPIST‑1e as it passes in front of its star, allowing them to study how starlight filters through any atmosphere the planet might have. Early analyses have already ruled out certain kinds of thick, hydrogen‑dominated atmospheres that would make the planet more like a mini‑Neptune than a rocky world, but the data so far are not precise enough to say definitively what, if anything, surrounds the planet. Hints of molecules such as methane have been reported, but some researchers argue that these subtle signals could be “noise” from the star rather than a genuine atmospheric signature.</p>
-            <p>What makes TRAPPIST‑1e so fascinating is not just the possibility of liquid water, but the fact that it orbits a dim red dwarf star that behaves very differently from the Sun. Red dwarfs can be more magnetically active, producing flares and radiation that might strip away atmospheres over time or alter their chemistry. On the other hand, because TRAPPIST‑1 is small and cool, its habitable zone lies close in, making the planets easier to observe in transit and giving telescopes more opportunities to gather data.</p>
-            <p>Researchers caution that the story is still in its early chapters. With only a handful of high‑quality observations analysed so far, there is not yet a consensus on whether TRAPPIST‑1e has retained an atmosphere thick enough to support surface water, let alone life. Ongoing and planned JWST campaigns will add many more transits to the dataset, improving the chances of detecting or ruling out key gases such as carbon dioxide, methane, or water vapour. At the same time, theorists are refining models of how atmospheres evolve around red dwarf stars, including the complex effects of stellar flares and particle winds.</p>
-            <p>Even with all these uncertainties, TRAPPIST‑1e has already become a kind of poster child for the next generation of exoplanet science. It represents the first plausible opportunity to study a potentially habitable, Earth‑sized world in meaningful detail using existing telescopes, rather than waiting for future instruments. Whether it ultimately turns out to be a bare rock, a water world, or something stranger, the process of interrogating this planet is teaching astronomers how to read the faint atmospheric fingerprints of small, distant worlds — a skill that will be crucial if humanity ever hopes to identify truly Earth‑like planets elsewhere in the galaxy.</p>
-          </div></article>
+            <p>In 2017, astronomers announced the discovery of seven Earth-sized planets orbiting a small, cool star named TRAPPIST-1, roughly 40 light-years from Earth in the constellation Aquarius. Three of those worlds lie in the star’s so-called habitable zone, where temperatures could, in theory, allow liquid water to exist on the surface if the planets have suitable atmospheres. Among them, one world — TRAPPIST-1e — quickly emerged as the most promising candidate for an Earth-like environment.</p>
+            <p>Climate models suggest that TRAPPIST-1e receives a level of starlight comparable to what Earth gets from the Sun, making it neither obviously scorched nor frozen so long as it can hold onto a reasonably thick atmosphere. Its size and density indicate a rocky composition, and its position between hotter inner siblings and colder outer companions has led some researchers to call it the system’s “just right” planet. That combination has put TRAPPIST-1e at the top of the list for detailed follow-up by the James Webb Space Telescope (JWST) and other observatories.</p>
+            <p>Over the last few years, scientists have begun using JWST to watch TRAPPIST-1e as it passes in front of its star, allowing them to study how starlight filters through any atmosphere the planet might have. Early analyses have already ruled out certain kinds of thick, hydrogen-dominated atmospheres that would make the planet more like a mini-Neptune than a rocky world, but the data so far are not precise enough to say definitively what, if anything, surrounds the planet. Hints of molecules such as methane have been reported, but some researchers argue that these subtle signals could be “noise” from the star rather than a genuine atmospheric signature.</p>
+            <p>What makes TRAPPIST-1e so fascinating is not just the possibility of liquid water, but the fact that it orbits a dim red dwarf star that behaves very differently from the Sun. Red dwarfs can be more magnetically active, producing flares and radiation that might strip away atmospheres over time or alter their chemistry. On the other hand, because TRAPPIST-1 is small and cool, its habitable zone lies close in, making the planets easier to observe in transit and giving telescopes more opportunities to gather data.</p>
+            <p>Researchers caution that the story is still in its early chapters. With only a handful of high-quality observations analysed so far, there is not yet a consensus on whether TRAPPIST-1e has retained an atmosphere thick enough to support surface water, let alone life. Ongoing and planned JWST campaigns will add many more transits to the dataset, improving the chances of detecting or ruling out key gases such as carbon dioxide, methane, or water vapour. At the same time, theorists are refining models of how atmospheres evolve around red dwarf stars, including the complex effects of stellar flares and particle winds.</p>
+            <p>Even with all these uncertainties, TRAPPIST-1e has already become a kind of poster child for the next generation of exoplanet science. It represents the first plausible opportunity to study a potentially habitable, Earth-sized world in meaningful detail using existing telescopes, rather than waiting for future instruments. Whether it ultimately turns out to be a bare rock, a water world, or something stranger, the process of interrogating this planet is teaching astronomers how to read the faint atmospheric fingerprints of small, distant worlds — a skill that will be crucial if humanity ever hopes to identify truly Earth-like planets elsewhere in the galaxy.</p>
+          </div>
+
+          <div class="article-pagination" aria-label="Article navigation">
+            <a class="article-nav-btn article-nav-btn--prev" href="article-2.html" aria-label="Previous Article">
+              <span aria-hidden="true">←</span>
+              <span>Previous Article</span>
+            </a>
+            <a class="article-nav-btn article-nav-btn--next" href="article-4.html" aria-label="Next Article">
+              <span>Next Article</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </main>

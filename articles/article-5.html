@@ -9,12 +9,40 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/style.css" />
+
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header" role="banner">
     <div class="header-inner">
-      <a href="../index.html" class="site-logo" aria-label="LUMINA — Home"><svg class="site-logo-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="14" r="6" fill="var(--cobalt)" opacity="0.18"/><circle cx="14" cy="14" r="3" fill="var(--cobalt)"/><line x1="14" y1="2" x2="14" y2="6" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/><line x1="14" y1="22" x2="14" y2="26" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/><line x1="2" y1="14" x2="6" y2="14" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/><line x1="22" y1="14" x2="26" y2="14" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/></svg>LUMINA</a>
+      <a href="../index.html" class="site-logo" aria-label="LUMINA — Home">
+        <svg class="site-logo-icon" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="14" cy="14" r="6" fill="var(--cobalt)" opacity="0.18"/>
+          <circle cx="14" cy="14" r="3" fill="var(--cobalt)"/>
+          <line x1="14" y1="2" x2="14" y2="6" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="14" y1="22" x2="14" y2="26" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="2" y1="14" x2="6" y2="14" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="22" y1="14" x2="26" y2="14" stroke="var(--cobalt)" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        LUMINA
+      </a>
       <nav class="site-nav" aria-label="Main navigation"><a href="../index.html" class="nav-link">Home</a><a href="../articles.html" class="nav-link nav-link--active">Articles</a><a href="../extras.html" class="nav-link">Extras</a><a href="../contact.html" class="nav-link">Contact</a></nav>
       <div class="header-actions"><button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"><svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button><button class="menu-toggle" aria-label="Open menu" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div>
     </div>
@@ -35,11 +63,23 @@
           </header>
           <div class="prose">
             <p>Among vertebrates, few animals are as astonishingly regenerative as the axolotl, a Mexican salamander that spends its life in a larval, aquatic form. While humans can only heal small injuries and cannot regrow lost arms or legs, adult axolotls can regenerate entire limbs — including bones, muscles, nerves, and skin — multiple times with little or no scarring. They can also repair parts of their spinal cord, heart, and other organs, making them a central model organism for scientists trying to understand how complex tissues might be coaxed to rebuild themselves.</p>
-            <p>When an axolotl loses a limb, the wound quickly closes without forming the thick scar tissue common in mammals. Cells in and around the injury site then revert to a more primitive, flexible state and aggregate into a structure called a blastema — essentially a mound of regeneration‑competent progenitor cells. Over time, that blastema proliferates, receives positional cues, and gradually re‑creates the missing structures in the correct shape and order, from shoulder to fingertips.</p>
-            <p>Recent molecular work has started to decode how axolotl cells know what to rebuild and where. Researchers have identified gradients of signalling molecules, such as retinoic acid, that differ along the limb’s length and help cells sense whether they are near the shoulder, mid‑limb, or wrist. Enzymes that break down these molecules are more active in some regions than others, creating a map of chemical concentrations that acts like a positional GPS inside the growing blastema. Other studies have highlighted gene networks, including genes like *Shox*, that are crucial for shaping bones near the limb’s base; turning these genes off can lead to limbs that regrow but end up too short.</p>
+            <p>When an axolotl loses a limb, the wound quickly closes without forming the thick scar tissue common in mammals. Cells in and around the injury site then revert to a more primitive, flexible state and aggregate into a structure called a blastema — essentially a mound of regeneration-competent progenitor cells. Over time, that blastema proliferates, receives positional cues, and gradually re-creates the missing structures in the correct shape and order, from shoulder to fingertips.</p>
+            <p>Recent molecular work has started to decode how axolotl cells know what to rebuild and where. Researchers have identified gradients of signalling molecules, such as retinoic acid, that differ along the limb’s length and help cells sense whether they are near the shoulder, mid-limb, or wrist. Enzymes that break down these molecules are more active in some regions than others, creating a map of chemical concentrations that acts like a positional GPS inside the growing blastema. Other studies have highlighted gene networks, including genes like *Shox*, that are crucial for shaping bones near the limb’s base; turning these genes off can lead to limbs that regrow but end up too short.</p>
             <p>Because axolotl limbs share many basic tissue types and developmental genes with human limbs, scientists see them as a living instruction manual for regenerative medicine. Advances in sequencing and gene editing have finally made it possible to probe the salamander’s enormous genome and experimentally switch genes on or off to see how regeneration is affected. The hope is that by understanding the molecular “language” that tells axolotl cells to rebuild rather than scar, researchers might eventually learn how to trigger at least some of those responses in mammalian tissues.</p>
-            <p>No one expects humans to grow back arms anytime soon, but smaller steps already seem plausible. Insights from axolotl studies could inform new strategies to enhance wound healing, regrow cartilage, repair spinal cord injuries, or encourage partial regrowth of complex structures like fingertips. The salamander’s abilities show that the genetic toolkit for large‑scale regeneration still exists in vertebrates — it is just being used very unevenly across species. Unlocking even a fraction of that potential in human medicine would transform how doctors think about trauma, surgery, and degenerative disease.</p>
-          </div></article>
+            <p>No one expects humans to grow back arms anytime soon, but smaller steps already seem plausible. Insights from axolotl studies could inform new strategies to enhance wound healing, regrow cartilage, repair spinal cord injuries, or encourage partial regrowth of complex structures like fingertips. The salamander’s abilities show that the genetic toolkit for large-scale regeneration still exists in vertebrates — it is just being used very unevenly across species. Unlocking even a fraction of that potential in human medicine would transform how doctors think about trauma, surgery, and degenerative disease.</p>
+          </div>
+
+          <div class="article-pagination" aria-label="Article navigation">
+            <a class="article-nav-btn article-nav-btn--prev" href="article-4.html" aria-label="Previous Article">
+              <span aria-hidden="true">←</span>
+              <span>Previous Article</span>
+            </a>
+            <a class="article-nav-btn article-nav-btn--next" href="article-6.html" aria-label="Next Article">
+              <span>Next Article</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </main>

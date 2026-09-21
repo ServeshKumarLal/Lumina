@@ -9,6 +9,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/style.css" />
+
+  <script>
+    (function() {
+      const STORAGE_KEY = 'lumina-theme';
+      const saved = localStorage.getItem(STORAGE_KEY);
+      const isDark = saved === 'dark' ? true : (saved === 'light' ? false : window.matchMedia('(prefers-color-scheme: dark)').matches);
+      const theme = isDark ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem(STORAGE_KEY, theme);
+    })();
+  </script>
+  <style>
+    /* Prevent FOUC by applying theme before page renders */
+    html[data-theme="dark"] { background: #0F0F0F; color: #E2E2E2; }
+    html[data-theme="light"] { background: #FFFFFF; color: #1A1A1A; }
+    body { transition: background 240ms cubic-bezier(0.22, 1, 0.36, 1), color 240ms cubic-bezier(0.22, 1, 0.36, 1); }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
@@ -83,12 +100,24 @@
             </div>
           </header>
           <div class="prose">
-            <p>Tardigrades — often nicknamed “water bears” for their stubby legs and lumbering gait — are some of the toughest animals known to science. Measuring less than a millimetre long, these microscopic creatures can withstand crushing pressures, extreme temperatures, and intense radiation that would kill most other life forms. Their legend grew in 2007, when thousands of tardigrades were launched into low Earth orbit on the European Space Agency’s FOTON‑M3 mission and exposed directly to the vacuum of space.</p>
-            <p>For up to 10–12 days, various groups of tardigrades were subjected to different combinations of conditions: some to vacuum alone, some to vacuum plus ultraviolet radiation, and some to vacuum plus more extreme UV and cosmic rays. Many dried out completely, curling into a dormant, desiccated state known as a “tun,” where their metabolism drops to almost undetectable levels. When the sample carriers were brought back to Earth and the animals were rehydrated, researchers found that a significant fraction of the vacuum‑only group revived and resumed normal movement, while a few survivors even endured the harshest radiation exposures.</p>
-            <p>Subsequent experiments and genetic studies have begun to reveal some of the tricks that make tardigrades so resilient. One key factor appears to be a suite of unique proteins, such as Dsup (“damage suppressor”), that help shield their DNA from radiation‑induced breaks and oxidative damage. Tardigrades also produce large amounts of protective molecules that stabilize cell structures when water is removed, preventing the catastrophic unfolding of proteins and membranes during desiccation. Together, these mechanisms allow the animals to effectively pause their biology for extended periods, then restart it when conditions improve.</p>
-            <p>Even more remarkably, offspring of tardigrades that survived space exposure do not seem to suffer obvious long‑term harm. A follow‑up analysis of one species, Milnesium tardigradum, found no clear reduction in reproductive performance or health in the generations that descended from individuals exposed to vacuum and radiation in orbit. This suggests that either survivors repair their DNA damage very effectively or individuals with unrepaired damage simply fail to reproduce, leaving relatively intact genomes to carry on the lineage.</p>
-            <p>These findings have caught the attention of astrobiologists and space agencies, not because tardigrades themselves are likely to travel between planets, but because their biology offers a proof‑of‑concept that complex multicellular animals can survive in conditions once thought completely lethal. Insights into their protective mechanisms may help design better shielding for human tissues during long‑duration missions, or more robust ways of storing biological samples in space. At the same time, the fact that even tardigrades struggle under full unfiltered UV exposure underscores just how hostile raw space really is, and how much protection Earth’s atmosphere quietly provides.</p>
-          </div></article>
+            <p>Tardigrades — often nicknamed “water bears” for their stubby legs and lumbering gait — are some of the toughest animals known to science. Measuring less than a millimetre long, these microscopic creatures can withstand crushing pressures, extreme temperatures, and intense radiation that would kill most other life forms. Their legend grew in 2007, when thousands of tardigrades were launched into low Earth orbit on the European Space Agency’s FOTON-M3 mission and exposed directly to the vacuum of space.</p>
+            <p>For up to 10–12 days, various groups of tardigrades were subjected to different combinations of conditions: some to vacuum alone, some to vacuum plus ultraviolet radiation, and some to vacuum plus more extreme UV and cosmic rays. Many dried out completely, curling into a dormant, desiccated state known as a “tun,” where their metabolism drops to almost undetectable levels. When the sample carriers were brought back to Earth and the animals were rehydrated, researchers found that a significant fraction of the vacuum-only group revived and resumed normal movement, while a few survivors even endured the harshest radiation exposures.</p>
+            <p>Subsequent experiments and genetic studies have begun to reveal some of the tricks that make tardigrades so resilient. One key factor appears to be a suite of unique proteins, such as Dsup (“damage suppressor”), that help shield their DNA from radiation-induced breaks and oxidative damage. Tardigrades also produce large amounts of protective molecules that stabilize cell structures when water is removed, preventing the catastrophic unfolding of proteins and membranes during desiccation. Together, these mechanisms allow the animals to effectively pause their biology for extended periods, then restart it when conditions improve.</p>
+            <p>Even more remarkably, offspring of tardigrades that survived space exposure do not seem to suffer obvious long-term harm. A follow-up analysis of one species, Milnesium tardigradum, found no clear reduction in reproductive performance or health in the generations that descended from individuals exposed to vacuum and radiation in orbit. This suggests that either survivors repair their DNA damage very effectively or individuals with unrepaired damage simply fail to reproduce, leaving relatively intact genomes to carry on the lineage.</p>
+            <p>These findings have caught the attention of astrobiologists and space agencies, not because tardigrades themselves are likely to travel between planets, but because their biology offers a proof-of-concept that complex multicellular animals can survive in conditions once thought completely lethal. Insights into their protective mechanisms may help design better shielding for human tissues during long-duration missions, or more robust ways of storing biological samples in space. At the same time, the fact that even tardigrades struggle under full unfiltered UV exposure underscores just how hostile raw space really is, and how much protection Earth’s atmosphere quietly provides.</p>
+          </div>
+
+          <div class="article-pagination" aria-label="Article navigation">
+            <a class="article-nav-btn article-nav-btn--prev" href="article-3.html" aria-label="Previous Article">
+              <span aria-hidden="true">←</span>
+              <span>Previous Article</span>
+            </a>
+            <a class="article-nav-btn article-nav-btn--next" href="article-5.html" aria-label="Next Article">
+              <span>Next Article</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
       </div>
     </div>
   </main>
