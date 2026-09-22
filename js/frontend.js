@@ -318,42 +318,6 @@
     );
   }
 
-/*
-  // Mouse movement path sampling.
-  // Sends occasional "mouse_path" events with a limited set of points.
-  function setupMouseTracking() {
-    window.addEventListener(
-      "mousemove",
-      function (e) {
-        markFirstInteraction();
-
-        if (mousePath.length < MOUSE_PATH_MAX_POINTS) {
-          mousePath.push({
-            x: e.clientX,
-            y: e.clientY,
-            t: Date.now(),
-          });
-        }
-
-        // Flush at most every 2s while there is movement
-        if (!mousePathFlushTimeout) {
-          mousePathFlushTimeout = setTimeout(function () {
-            if (mousePath.length) {
-              sendEvent("mouse_path", {
-                points: mousePath.slice(),
-                sampleCount: mousePath.length,
-              });
-              mousePath = [];
-            }
-            mousePathFlushTimeout = null;
-          }, 2000);
-        }
-      },
-      { passive: true }
-    );
-  }
-*/
-
   // Hover duration per element.
   // Logs "hover" events when the mouse leaves an element after a meaningful dwell.
   function setupHoverTracking() {
