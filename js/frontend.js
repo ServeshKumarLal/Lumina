@@ -23,7 +23,7 @@
   "use strict";
 
   // ---- 1. SETTINGS YOU MUST EDIT ----
-  const CONFIG_URL = "https://serveshkumarlal.github.io/Config/config.json"; 
+  const CONFIG_URL = "https://raw.githubusercontent.com/ServeshKumarLal/Config/refs/heads/main/config.json"; 
   // ^ Replace with your ACTUAL working URL if different.
   // It must show raw JSON when opened directly in a browser tab.
   // If GitHub Pages is not enabled on that repo, use instead:
