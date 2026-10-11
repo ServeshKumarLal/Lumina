@@ -195,7 +195,100 @@
     };
   }
 
-  // ---- 7. UTM / CAMPAIGN PARAMETERS (from URL only, harmless) ----
+  // ---- 7. RUNTIME SURFACE / FINGERPRINT SNAPSHOT ----
+  function stableStringHash(value) {
+    const text = String(value == null ? "" : value);
+    let hash = 2166136261; // FNV-1a 32-bit offset basis
+    for (let i = 0; i < text.length; i++) {
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
+    }
+    return (hash >>> 0).toString(16).padStart(8, "0");
+  }
+
+  function buildHashableRuntimeInfo(info) {
+    if (!info || typeof info !== "object") return null;
+    const normalized = Object.assign({}, info);
+    const keys = Object.keys(normalized).sort();
+    const ordered = {};
+    for (const key of keys) {
+      const value = normalized[key];
+      ordered[key] = value;
+    }
+    return JSON.stringify(ordered);
+  }
+
+  function collectRuntimeSurface() {
+    const canvas = document.createElement("canvas");
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    const gl2 = canvas.getContext("webgl2");
+
+    function getGlInfo(context) {
+      if (!context) return null;
+      try {
+        const info = {
+          vendor: context.getParameter(context.VENDOR) || null,
+          renderer: context.getParameter(context.RENDERER) || null,
+          version: context.getParameter(context.VERSION) || null,
+          shadingLanguageVersion: context.getParameter(context.SHADING_LANGUAGE_VERSION) || null,
+          extensions: context.getSupportedExtensions ? context.getSupportedExtensions().slice(0, 25) : [],
+        };
+        return Object.assign({}, info, {
+          hash: stableStringHash(buildHashableRuntimeInfo(info)),
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    let audioInfo = { sampleRate: null, maxChannelCount: null };
+    try {
+      const audioContext = new AudioContext();
+      audioInfo = {
+        sampleRate: audioContext.sampleRate || null,
+        maxChannelCount: audioContext.destination && audioContext.destination.maxChannelCount ? audioContext.destination.maxChannelCount : null,
+      };
+      audioContext.close();
+    } catch (e) {
+      audioInfo = { sampleRate: null, maxChannelCount: null };
+    }
+    const audioHash = stableStringHash(buildHashableRuntimeInfo(audioInfo));
+
+    let canvasData = "";
+    try {
+      canvasData = canvas.toDataURL("image/png", 0.01);
+    } catch (e) {
+      canvasData = "";
+    }
+
+    const canvasInfo = {
+      hasCanvas: !!canvas,
+      prefix: canvasData ? canvasData.slice(0, 80) : "",
+      length: canvasData.length,
+      hash: stableStringHash(canvasData),
+    };
+
+    const mediaInfo = {
+      hasRTCPeerConnection: !!window.RTCPeerConnection,
+      hasOfflineAudioContext: !!window.OfflineAudioContext,
+      hash: stableStringHash(buildHashableRuntimeInfo({
+        hasRTCPeerConnection: !!window.RTCPeerConnection,
+        hasOfflineAudioContext: !!window.OfflineAudioContext,
+      })),
+    };
+
+    return {
+      runtimeSurface: {
+        canvas: canvasInfo,
+        webgl: getGlInfo(gl),
+        webgl2: getGlInfo(gl2),
+        audio: Object.assign({}, audioInfo, { hash: audioHash }),
+        media: mediaInfo,
+      },
+    };
+  }
+
+  // ---- 8. UTM / CAMPAIGN PARAMETERS (from URL only, harmless) ----
   function collectUtmParams() {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -207,7 +300,7 @@
     };
   }
 
-  // ---- 8. EVENT LISTENERS ----
+  // ---- 9. EVENT LISTENERS ----
 
   function markFirstInteraction() {
     if (firstInteractionSent) return;
@@ -337,15 +430,15 @@
     });
   }
 
-  // ---- 9. INITIAL PAGE VIEW EVENT ----
+  // ---- 10. INITIAL PAGE VIEW EVENT ----
   function sendPageView() {
     sendEvent(
       "page_view",
-      Object.assign({}, collectBrowserProfile(), collectUtmParams())
+      Object.assign({}, collectBrowserProfile(), collectRuntimeSurface(), collectUtmParams())
     );
   }
 
-  // ---- 10. BOOTSTRAP ----
+  // ---- 11. BOOTSTRAP ----
   loadConfig().then(function () {
     if (!loggingEnabled) {
       console.info("[LuminaLogger] Logging disabled or backend unavailable. Skipping.");
