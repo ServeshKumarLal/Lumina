@@ -44,6 +44,35 @@
   let lastScrollDirection = null;
   let lastScrollY = window.scrollY || 0;
 
+  function readSessionExitReason() {
+    const candidates = [
+      window.__LUMINA_EXIT_REASON__,
+      window.__luminaExitReason,
+      window.__LUMINA_SESSION_STATE__ && window.__LUMINA_SESSION_STATE__.exitReason,
+      document.body && document.body.dataset && document.body.dataset.exitReason,
+      document.documentElement && document.documentElement.dataset && document.documentElement.dataset.exitReason,
+      document.querySelector('meta[name="lumina-exit-reason"]') && document.querySelector('meta[name="lumina-exit-reason"]').content,
+    ];
+    for (const candidate of candidates) {
+      if (typeof candidate === 'string' && candidate.trim()) return candidate.trim();
+    }
+    return null;
+  }
+
+  function setSessionExitReason(reason) {
+    const normalized = typeof reason === 'string' ? reason.trim() : (typeof reason === 'number' ? String(reason) : '');
+    if (!normalized) return null;
+    window.__LUMINA_EXIT_REASON__ = normalized;
+    if (!window.__LUMINA_SESSION_STATE__) window.__LUMINA_SESSION_STATE__ = {};
+    window.__LUMINA_SESSION_STATE__.exitReason = normalized;
+    return normalized;
+  }
+
+  window.LuminaLogger = Object.assign(window.LuminaLogger || {}, {
+    setExitReason: setSessionExitReason,
+    getExitReason: readSessionExitReason,
+  });
+
   // ---- 3. SESSION ID (first-party only, localStorage + cookie fallback) ----
   function getOrCreateSessionId() {
     try {
