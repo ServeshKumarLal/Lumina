@@ -176,6 +176,8 @@
       availScreenHeight: window.screen ? window.screen.availHeight : null,
       innerWidth: window.innerWidth,
       innerHeight: window.innerHeight,
+      screenX: window.screenX ?? null,
+      screenY: window.screenY ?? null,
       devicePixelRatio: window.devicePixelRatio || null,
       colorDepth: window.screen ? window.screen.colorDepth : null,
       pixelDepth: window.screen ? window.screen.pixelDepth : null,
